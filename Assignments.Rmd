@@ -101,9 +101,9 @@ in each state who live in an urban area. The information in general is the US Ar
 Draw a histogram of `Murder` with proper labels and title.
 
 ```{r}
-hist(dat$Murder, main = "Histogram of US Arrests of Murder", 
-     xlab = "US Arrests of Murder", xlim = c(0,20), 
-     ylim = c(0, 15))
+hist(dat$Murder, main = "Histogram of US Arrests
+     of Murder", xlab = "US Arrests of Murder", 
+     xlim = c(0,20), ylim = c(0, 15))
 ```
 
 ### Problem 6
@@ -128,6 +128,16 @@ summary(dat$Murder)
 Repeat the same steps you followed for `Murder`, for the variables `Assault` and `Rape`. Now plot all three histograms together. You can do this by using the command `par(mfrow=c(3,1))` and then plotting each of the three. 
 
 ```{r, echo = TRUE, fig.width = 5, fig.height = 8}
+hist(dat$Assault, main = "Histogram of US Arrests of Assault",
+     xlab = "US Arrests of Assault",xlim = c(0,350), 
+     ylim = c(0,15))
+hist(dat$UrbanPop, main = "Histogram of US Urban Population",
+     xlab = "US Urban Population", xlim = c(0,100), 
+     ylim = c(0,15))
+hist(dat$Rape, main = "Histogram of US Arrests of Rape", 
+     xlab = "US Arrests of Rape", xlim = c(0,50), 
+     ylim = c(0,15))
+par(mfrow=c(3,1))
 hist(dat$Assault, main = "Histogram of US Arrests of Assault", 
      xlab = "US Arrests of Assault", xlim = c(0,350), 
      ylim = c(0,15))
@@ -135,14 +145,8 @@ hist(dat$UrbanPop, main = "Histogram of US Urban Population",
      xlab = "US Urban Population", xlim = c(0,100), 
      ylim = c(0,15))
 hist(dat$Rape, main = "Histogram of US Arrests of Rape", 
-     xlab = "US Arrests of Rape", xlim = c(0,50), ylim = c(0,15))
-par(mfrow=c(3,1))
-hist(dat$Assault, main = "Histogram of US Arrests of Assault", 
-     xlab = "US Arrests of Assault", xlim = c(0,350), ylim = c(0,15))
-hist(dat$UrbanPop, main = "Histogram of US Urban Population",
-     xlab = "US Urban Population", xlim = c(0,100), ylim = c(0,15))
-hist(dat$Rape, main = "Histogram of US Arrests of Rape", 
-     xlab = "US Arrests of Rape", xlim = c(0,50), ylim = c(0,15))
+     xlab = "US Arrests of Rape", xlim = c(0,50), 
+     ylim = c(0,15))
 ```
 
 What does the command par do, in your own words (you can look this up by asking R `?par`)?
