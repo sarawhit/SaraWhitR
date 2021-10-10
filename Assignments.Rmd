@@ -1,0 +1,322 @@
+---
+title: "Assignments"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 1
+    #code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+This page will contain all the assignments you submit for the class.
+
+
+
+### Instructions for all assignments
+
+I want you to submit your assignment as a PDF, so I can keep a record of what the code looked like that day. I also want you to include your answers on your personal GitHub website. This will be good practice for editing your website and it will help you produce something you can keep after the class is over.
+
+1. Download the Assignment1.Rmd file from Canvas. You can use this as a template for writing your answers. It's the same as what you can see on my website in the Assignments tab. Once we're done with this I'll edit the text on the website to include the solutions.
+
+2. On RStudio, open a new R script in RStudio (File > New File > R Script). This is where you can test out your R code. You'll write your R commands and draw plots here.
+
+3. Once you have finalized your code, copy and paste your results into this template (Assignment 1.Rmd). For example, if you produced a plot as the solution to one of the problems, you can copy and paste the R code in R markdown by using the ` ``{r} ``` ` command. Answer the questions in full sentences and Save.
+
+4. Produce a PDF file with your answers. To do this, knit to PDF (use Knit button at the top of RStudio), locate the PDF file in your docs folder (it's in the same folder as the Rproj), and submit that on on Canvas in Assignment 1.
+
+5. Build Website, go to GitHub desktop, commit and push. Now your solutions should be on your website as well.
+
+
+
+# Assignment 1
+
+**Collaborators: Rachael Villari, Michaela Reiser. **
+
+This assignment is due on Canvas on Monday 9/20 before class, at 10:15 am. Include the name of anyone with whom you collaborated at the top of the assignment.
+
+Collaborators: Rachael Villari, Michaela Reiser 
+
+
+### Problem 1 
+
+Install the datasets package on the console below using `install.packages("datasets")`. Now load the library.
+
+```{r}
+library(datasets)
+```
+
+Load the USArrests data set and rename it `dat`. Note that this dataset comes with R, in the package datasets, so there's no need to load data from your computer. Why is it useful to rename the dataset?
+
+Answer: It is useful to rename the dataset so we have a single, shorter variable to account for the whole dataset
+
+```{r}
+dat <- USArrests
+```
+
+### Problem 2
+
+Use this command to make the state names into a new variable called State. 
+
+```{r, eval=FALSE}
+dat$state <- tolower(rownames(USArrests))
+```
+
+This dataset has the state names as row names, so we just want to make them into a new variable. We also make them all lower case, because that will help us draw a map later - the map function requires the states to be lower case.
+
+
+List the variables contained in the dataset `USArrests`.
+
+Answer: Murder, Assault, Urban Population, Rape
+
+```{r}
+names(dat)
+```
+
+### Problem 3 
+
+What type of variable (from the DVB chapter) is `Murder`? 
+
+Answer: quantitative
+
+What R Type of variable is it?
+
+Answer: numeric
+
+
+### Problem 4
+
+What information is contained in this dataset, in general? What do the numbers mean? 
+
+Answer: The numbers are the frequency of arrests per crime in each state and the urban population is the percentage of people
+in each state who live in an urban area. The information in general is the US Arrests of each crime in each state.
+
+### Problem 5
+
+Draw a histogram of `Murder` with proper labels and title.
+
+```{r}
+hist(dat$Murder, main = "Histogram of US Arrests
+     of Murder", xlab = "US Arrests of Murder", 
+     xlim = c(0,20), ylim = c(0, 15))
+```
+
+### Problem 6
+
+Please summarize `Murder` quantitatively. What are its mean and median? What is the difference between mean and median? What is a quartile, and why do you think R gives you the 1st Qu. and 3rd Qu.?
+
+Answer: 
+Min: 0.8 
+Max:17.4
+Mean:7.788
+Median:7.250
+Q1: 4.075
+Q3: 11.250
+The difference between mean and median is that the mean gives the average of all murders while the median relates to the value at the midpoint of the data set. R gives the 1st and 3rd quartiles so we can have a fuller picture of our dataset and we can have a better idea of where our median falls. 
+
+```{r}
+summary(dat$Murder)
+```
+
+### Problem 7
+
+Repeat the same steps you followed for `Murder`, for the variables `Assault` and `Rape`. Now plot all three histograms together. You can do this by using the command `par(mfrow=c(3,1))` and then plotting each of the three. 
+
+```{r, echo = TRUE, fig.width = 5, fig.height = 8}
+hist(dat$Assault, main = "Histogram of US Arrests of Assault",
+     xlab = "US Arrests of Assault",xlim = c(0,350), 
+     ylim = c(0,15))
+hist(dat$UrbanPop, main = "Histogram of US Urban Population",
+     xlab = "US Urban Population", xlim = c(0,100), 
+     ylim = c(0,15))
+hist(dat$Rape, main = "Histogram of US Arrests of Rape", 
+     xlab = "US Arrests of Rape", xlim = c(0,50), 
+     ylim = c(0,15))
+par(mfrow=c(3,1))
+hist(dat$Assault, main = "Histogram of US Arrests of Assault", 
+     xlab = "US Arrests of Assault", xlim = c(0,350), 
+     ylim = c(0,15))
+hist(dat$UrbanPop, main = "Histogram of US Urban Population",
+     xlab = "US Urban Population", xlim = c(0,100), 
+     ylim = c(0,15))
+hist(dat$Rape, main = "Histogram of US Arrests of Rape", 
+     xlab = "US Arrests of Rape", xlim = c(0,50), 
+     ylim = c(0,15))
+```
+
+What does the command par do, in your own words (you can look this up by asking R `?par`)?
+
+Answer: command par allows one to see all three graphs together in order to compare them more easily
+
+What can you learn from plotting the histograms together?
+
+Answer: You can learn the distributions against each other and see which variable has the most uniform or skewed distribution.
+  
+### Problem 8
+
+In the console below (not in text), type `install.packages("maps")` and press Enter, and then type `install.packages("ggplot2")` and press Enter. This will install the packages so you can load the libraries.
+
+Run this code:
+
+```{r, eval = FALSE, fig.width = 7.5, fig.height = 4}
+install.packages("maps")
+install.packages("ggplot2")
+library('maps') 
+library('ggplot2') 
+
+ggplot(dat, aes(map_id=state, fill=Murder)) + 
+  geom_map(map=map_data("state")) + 
+  expand_limits(x=map_data("state")$long, y=map_data("state")$lat)
+```
+
+What does this code do? Explain what each line is doing.
+
+Answer: The first two lines of code are installing the packages onto R so we can use the functions located within the package. Calling the library of maps and ggplot2 allows us to access these two functions within our own R Script. Lines 167-169 are plotting our USArrests data located in the variable dat, specifically the variable of "Murder." It maps the data by U.S state of the different concentrations of murder arrests.
+
+$$\\[2in]$$
+
+
+
+
+# Assignment 2 
+
+###Problem 1: Load Data 
+
+```{r}
+dat.nsduh <- read.csv("dat.nsduh.small.1.csv")
+```
+
+What are the dimensions of the datset? 
+
+```{r}
+dim(dat.nsduh)
+```
+
+Answer: 171 rows and 7 columns 
+
+###Problem 2: Variables
+
+Describe the variables in the dataset
+
+Answer: Answer: Variable names are "mjage," "cigage,"
+"iralcage," age2," "sexatract," "speakengl," and "irsex." mj, alc, and age are quantitative variables while the others are categorical coded as an integer. mjage = the age that the individual first used marijuana, cigeage = the age that the individual first had a cigarette, iralcage = age to first 
+drink alcohol, age2 = recoded age, sexatract = sexual attraction, speakengl = how well does one speak english, irsex = gender
+
+```{r}
+names(dat.nsduh)
+summary(dat.nsduh)
+```
+
+What is this dataset about? Who collected the data, what kind of sample is it, and what was the purpose of generating the data?
+
+Answer: This is data from the National Survey on Drug Use and Health, about the drug use, alcohol use, cigarette use, and demographics of a random sample taken from all 50 states
+
+the purpose of generating the data is to track levels of substance use and identify the groups that are the main users
+
+###Problem 3: Age and gender
+
+What is the age distribution of the sample like? Make sure you read the codebook to know what the variable values mean.
+
+```{r}
+hist(dat.nsduh$age2)
+summary(dat.nsduh$age2)
+```
+
+Answer: the age distribution has a left skew. The mean is 13.98, median is 15, First quartile is 13 and the third quartile is 15 with a min of 4 and max of 17. This means that the average age of the sample is between 26 and 29 years old, the minimum is around 15 years of age, and the max is around 65+ years 
+
+Do you think this age distribution representative of the US population? Why or why  not?
+
+Answer:No I do not think this age distribution is representative of the U.S population because the distribution is skewed, a true representation would be closer to a uniform distribution
+
+Is the sample balanced in terms of gender? If not, are there more females or males?
+
+```{r}
+hist(dat.nsduh$irsex)
+```
+
+Answer: the sample contains slightly more males than females 
+
+Use this code to draw a stacked bar plot to view the relationship between sex and age. What can you conclude from this plot?
+
+```{r}
+tab.agesex <- table(dat.nsduh$irsex, dat.nsduh$age2)
+barplot(tab.agesex,
+        main = "Stacked barchart",
+        xlab = "Age category", ylab = "Frequency",
+        legend.text = rownames(tab.agesex),
+        beside = FALSE) # Stacked bars (default)
+```
+
+Answer: One can conclude that the majority of individuals lie within the 13-15 age category. The younger age categories are mainly male dominated. This is a left skewed distribution where most of the data is in the higher age categories 
+
+###Problem 4: Substance use
+
+```{r}
+par(mfrow=c(3,1))
+hist(dat.nsduh$cigage, main = "Age of First Cigarette",xlab = "Age")
+hist(dat.nsduh$mjage, main = "Age of First Marijuana Use", xlab = "Age")
+hist(dat.nsduh$iralcage, main = "Age of First Drink", xlab = "Age")
+
+```
+For which of the three substances included in the dataset (marijuana, alcohol, and cigarettes) do individuals tend to use the substance earlier?
+
+Answer: Alcohol is the substance that individuals tend to use earlier
+
+
+###Problem 5: Sexual attraction
+
+What does the distribution of sexual attraction look like? Is this what you expected?
+
+```{r}
+dat.nsduh$sexatract[dat.nsduh$sexatract == 99] <- NA
+hist(dat.nsduh$sexatract, main = "Sexual Attraction", xlab = "Sexual Attraction")
+```
+
+Answer: yes this is what one would expect because the majority of the U.S Population is heterosexual
+
+What is the distribution of sexual attraction by gender? 
+
+```{r}
+par(mar=c(1,1,1,1))
+
+tab.gendersexatract <- table(dat.nsduh$irsex, dat.nsduh$sexatract)
+barplot(tab.gendersexatract,
+        main = "Relationship of Sexual Attraction and Gender",
+        xlab = "Sexual Attraction", ylab = "Frequency",
+        legend.text = rownames(tab.gendersexatract),
+        beside = FALSE) # Stacked bars (default)
+```
+
+Answer: The stacked bar plot shows a right skew where the majority of individuals are purely heterosexual. The majority of men self report as heterosexual while there is marginally more balance in women between hetersexuality and being mostly attracted to the opposite gender (2).
+
+###Problem 6: English speaking
+
+What does the distribution of English speaking look like in the sample? Is this what you might expect for a random sample of the US population?
+
+```{r}
+hist(dat.nsduh$speakengl, main = "English Speaking", xlab = "English Speaking")
+```
+
+Answer: The majority of individuals can speak English very well while the minority report speaking it well or not well. This is representative of the U.S
+
+Are there more English speaker females or males?
+
+```{r}
+tab.genderspeakengl <- table(dat.nsduh$irsex, dat.nsduh$speakengl)
+barplot(tab.genderspeakengl,
+        main = "Relationship of Gender and English Fluency",
+        xlab = "English fluency", ylab = "Frequency",
+        legend.text = rownames(tab.genderspeakengl),
+        beside = FALSE) # Stacked bars (default)
+```
+
+Answer: there are more English speaking males
+
+
+
+
