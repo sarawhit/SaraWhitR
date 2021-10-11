@@ -9,5 +9,5 @@ navbar:
     - text: "Links"
       href: Links.html
     - text: "Exams"
-      href: Exam1.html
+      href: Exam-1.html
 output_dir: "docs"
