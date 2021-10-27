@@ -319,4 +319,133 @@ Answer: there are more English speaking males
 
 
 
+# Assignment 3
+
+---
+
+**Collaborators: **.
+
+This assignment is due on Canvas on Wednesday 10/27/2021 before class, at 10:15 am. Include the name of anyone with whom you collaborated at the top of the assignment.
+
+Submit your responses as either an HTML file or a PDF file on Canvas. Also, please upload it to your website.
+
+Save the file (found on Canvas) crime_simple.txt to the same folder as this file (your Rmd file for Assignment 3).
+
+Load the data.
+```{r}
+library(readr)
+library(knitr)
+dat.crime <- read_delim("crime_simple.txt", delim = "\t")
+```
+
+
+This is a dataset from a textbook by Brian S. Everitt about crime in the US in 1960. The data originate from the Uniform Crime Report of the FBI and other government sources. The data for 47 states of the USA are given. 
+
+Here is the codebook:
+
+R: Crime rate: # of offenses reported to police per million population
+
+Age: The number of males of age 14-24 per 1000 population
+
+S: Indicator variable for Southern states (0 = No, 1 = Yes)
+
+Ed: Mean of years of schooling x 10 for persons of age 25 or older
+
+Ex0: 1960 per capita expenditure on police by state and local government
+
+Ex1: 1959 per capita expenditure on police by state and local government
+
+LF: Labor force participation rate per 1000 civilian urban males age 14-24
+
+M: The number of males per 1000 females
+
+N: State population size in hundred thousands
+
+NW: The number of non-whites per 1000 population
+
+U1: Unemployment rate of urban males per 1000 of age 14-24
+
+U2: Unemployment rate of urban males per 1000 of age 35-39
+
+W: Median value of transferable goods and assets or family income in tens of $
+
+X: The number of families per 1000 earning below 1/2 the median income
+
+
+We are interested in checking whether the reported crime rate (# of offenses reported to police per million population) and the average education (mean number of years of schooling for persons of age 25 or older) are related. 
+
+
+1. How many observations are there in the dataset? To what does each observation correspond?
+
+```{r}
+names(dat.crime)
+```
+
+
+
+__R corresponds to the crime rate. Age corresponds to the number of males of age 14-24 per 1000 population.S is the ndicator variable for Southern states where 0 = No and 1 = Yes. Ed is the mean of years of schooling x 10 for persons of age 25 or older. Ex0 is the 1960 per capita expenditure on police by state and local government. Ex1 is the 1959 per capita expenditure on police by state and local government. LF is the labor force participation rate per 1000 civilian urban males age 14-24. M is the number of males per 1000 females. N is the state population size in hundred thousands.NW is the number of non-whites per 1000 population.U1 is the unemployment rate of urban males per 1000 of age 14-24. U2 is the unemployment rate of urban males per 1000 of age 35-39. W is the median value of transferable goods and assets or family income in tens of $. Finally, X is the number of families per 1000 earning below 1/2 the median income__
+
+2. Draw a scatterplot of the two variables. Calculate the correlation between the two variables. Can you come up with an explanation for this relationship?
+
+```{r, fig.width=6, fig.height=4}
+plot(dat.crime$Ed, dat.crime$R, main = "Relationship between
+     Education Level and Crime Reporting", ylab = "# of offenses
+     reported per mil", xlab = "Mean of years of schooling x 10
+     for persons of age 25 or older",xlim = c(80, 130), ylim 
+     = c(0, 200))
+
+cor(dat.crime$Ed, dat.crime$R)
+```
+
+__There is a correlation of 0.32 between Education level and Crime reporting. This suggests that there is a positive relationship between the two variables. This could be because as one becomes more educated, one becomes more aware of what is illegal and wants to work toward crime reduction and making their surroudning space safer.__
+
+
+
+3. Regress reported crime rate (y) on average education (x) and call this linear model crime.lm and write the summary of the regression by using this code, which makes it look a little nicer
+
+```{r, eval=TRUE} 
+# Remember to remove eval=FALSE above!
+dat.crime$Ed.c = scale(dat.crime$Ed, center=TRUE, scale=FALSE)
+crime.lm <- lm(formula = R ~ Ed, data = dat.crime)
+summary(crime.lm)
+kable(summary(crime.lm)$coef, digits = 2)
+```
+
+
+
+4. Are the four assumptions of linear regression satisfied? To answer this, draw the relevant plots. (Write a maximum of one sentence per assumption.)
+
+```{r} 
+plot(dat.crime$Ed.c, crime.lm$residuals, ylim=c(-100,100),
+     main="Residuals vs. x", xlab="x, Scaled Crime Reporting
+     Rate", ylab="Residuals")
+
+abline(h = 0, lty="dashed")
+
+plot(crime.lm, which=1)
+
+plot(crime.lm, which=2)
+
+```
+
+__1. The Residuals versus Fitted plot shows no nonlinear trend as proved by the approximately flat red line fitting the linearity assumption. The independence assumption is met as shown by the residuals vs. x plot as there is no pattern of residuals shown. The homoscedasticity assumption is met as shown by the scatterplot in problem 2 as the points are random, but do not have any serious outliers. The normal population assumption is mostly met but could be argued that the right tail of the distribution is smaller than usual for a normal distribution. __
+
+
+5. Is the relationship between reported crime and average education statistically significant? Report the estimated coefficient of the slope, the standard error, and the p-value. What does it mean for the relationship to be statistically significant?
+
+__Yes, the relationship between crime reporting and average education is statistically significant. The coefficient of the slope is 1.12, the standard error is 0.49, and the p-value is 0.03. The relationship being statistically significant is shown through the p-value being less than the alpha value of 0.05. It means that the results are not due to chance rather correlated to the relationship between the two studied variables.__
+
+6. How are reported crime and average education related? In other words, for every unit increase in average education, how does reported crime rate change (per million) per state?
+
+__Reported crime and average education are related in that for every unit increase in education, reported crime rate increases by 1.12 units per million per state.__
+
+7. Can you conclude that if individuals were to receive more education, then crime will be reported more often? Why or why not?
+
+__Yes, this can be concluded do to the statistical significance of education level and crime reporting in being compared to each other through linear regression. Along with the positive correlation of the scatterplot and all of the assumptions being met, there is a relationship between getting an education and being more likely to report crime.__
+
+
+
+
+
+
 
