@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Sara Whitelaw" />
+
+<meta name="date" content="2021-11-01" />
+
+<title>Exam 2</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Sara's Site</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="Assignments.html">Assignments</a>
+</li>
+<li>
+  <a href="Links.html">Links</a>
+</li>
+<li>
+  <a href="Exam-1.html">Exams</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Exam 2</h1>
+<h4 class="author">Sara Whitelaw</h4>
+<h4 class="date">11/01/2021</h4>
+
+</div>
+
+
+<div id="instructions" class="section level1">
+<h1>Instructions</h1>
+<ol style="list-style-type: lower-alpha">
+<li><p>Create a folder in your computer (a good place would be under Crim 250, Exams).</p></li>
+<li><p>Download the dataset from the Canvas website (sim.data.csv) onto that folder, and save your Exam 2.Rmd file in the same folder.</p></li>
+<li><p>Data description: This dataset provides (simulated) data about 200 police departments in one year. It contains information about the funding received by the department as well as incidents of police brutality. Suppose this dataset (sim.data.csv) was collected by researchers to answer this question: <strong>“Does having more funding in a police department lead to fewer incidents of police brutality?”</strong></p></li>
+<li><p>Codebook:</p></li>
+</ol>
+<ul>
+<li>funds: How much funding the police department received in that year in millions of dollars.</li>
+<li>po.brut: How many incidents of police brutality were reported by the department that year.</li>
+<li>po.dept.code: Police department code</li>
+</ul>
+</div>
+<div id="problem-1-eda-10-points" class="section level1">
+<h1>Problem 1: EDA (10 points)</h1>
+<p>Describe the dataset and variables. Perform exploratory data analysis for the two variables of interest: funds and po.brut.</p>
+<pre class="r"><code>dat.sim &lt;- read.csv(file = &#39;sim.data.csv&#39;)
+names(dat.sim)</code></pre>
+<pre><code>## [1] &quot;po.dept.code&quot; &quot;funds&quot;        &quot;po.brut&quot;</code></pre>
+<pre class="r"><code>summary(dat.sim$funds)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   21.40   51.67   59.75   61.04   72.17   99.70</code></pre>
+<pre class="r"><code>summary(dat.sim$po.brut)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00   14.00   19.00   18.14   22.00   29.00</code></pre>
+<pre class="r"><code>hist(dat.sim$funds, main=&quot;Funding of Police Department&quot;, xlab=&quot;Funding&quot;, ylab=&quot;Frequency&quot;)</code></pre>
+<p><img src="Exam-2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>hist(dat.sim$po.brut, main=&quot;Incidents of Police Brutality&quot;, xlab=&quot;Incidents&quot;, ylab=&quot;Frequency&quot;)</code></pre>
+<p><img src="Exam-2_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<p><strong>There are three observed variables in the dataset: funds, po.brut, and po.dept.code. Funds is in reference to how much funding the police department received in that year in millions of dollars. Po.brut is how many incidents of police brutality were reported by the department that year. Po.dept.code is police deparment code. The mean for funds is 61.04 while po.brut is 18.14. The minimum for funds is 21.40, max is 99.70. THe minimum for po.brut is 0 and the max is 29.</strong></p>
+</div>
+<div id="problem-2-linear-regression-30-points" class="section level1">
+<h1>Problem 2: Linear regression (30 points)</h1>
+<ol style="list-style-type: lower-alpha">
+<li>Perform a simple linear regression to answer the question of interest. To do this, name your linear model “reg.output” and write the summary of the regression by using “summary(reg.output)”.</li>
+</ol>
+<pre class="r"><code># Remember to remove eval=FALSE!!
+#dat.sim$funds.c = scale(dat.sim$funds, center=TRUE, scale=FALSE) 
+reg.output &lt;- lm(formula = po.brut ~ funds, data = dat.sim) 
+summary(reg.output)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = po.brut ~ funds, data = dat.sim)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.9433 -0.2233  0.2544  0.5952  1.1803 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 40.543069   0.282503  143.51   &lt;2e-16 ***
+## funds       -0.367099   0.004496  -81.64   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9464 on 198 degrees of freedom
+## Multiple R-squared:  0.9712, Adjusted R-squared:  0.971 
+## F-statistic:  6666 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Report the estimated coefficient, standard error, and p-value of the slope. Is the relationship between funds and incidents statistically significant? Explain.</li>
+</ol>
+<p><strong>The estimated coefficient is 40.54 while the standard error is 0.9464 and the p value of the slope is 2e-16. The relationship between funds and incidents is statistically significant because the p value is less than the alpha value of 0.05 meaning we reject the null hypothesis</strong></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Draw a scatterplot of po.brut (y-axis) and funds (x-axis). Right below your plot command, use abline to draw the fitted regression line, like this:</li>
+</ol>
+<pre class="r"><code># Remember to remove eval=FALSE!!
+plot(dat.sim$funds, dat.sim$po.brut,  main=&quot;Relationship between Funds and Incidents&quot;, xlab=&quot;Funds&quot;, ylab=&quot;Incidents of Police Brutality&quot;)
+abline(reg.output, col = &quot;red&quot;, lwd=2)</code></pre>
+<p><img src="Exam-2_files/figure-html/unnamed-chunk-3-1.png" width="384" /></p>
+<pre class="r"><code>plot(dat.sim$funds, reg.output$residuals, ylim=c(-15,15), main=&quot;Residuals vs. x&quot;, xlab=&quot;x, Funds&quot;, ylab=&quot;Residuals&quot;)
+abline(h = 0, lty=&quot;dashed&quot;)</code></pre>
+<p><img src="Exam-2_files/figure-html/unnamed-chunk-3-2.png" width="384" /></p>
+<pre class="r"><code>plot(reg.output, which=1)</code></pre>
+<p><img src="Exam-2_files/figure-html/unnamed-chunk-3-3.png" width="384" /></p>
+<pre class="r"><code>plot(reg.output, which=3)</code></pre>
+<p><img src="Exam-2_files/figure-html/unnamed-chunk-3-4.png" width="384" /></p>
+<pre class="r"><code>plot(reg.output, which=2)</code></pre>
+<p><img src="Exam-2_files/figure-html/unnamed-chunk-3-5.png" width="384" /> Does the line look like a good fit? Why or why not?</p>
+<p><strong>Yes, the line is a good fit because it goes through most of the data points</strong></p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Are the four assumptions of linear regression satisfied? To answer this, draw the relevant plots. (Write a maximum of one sentence per assumption.) If not, what might you try to do to improve this (if you had more time)?</li>
+</ol>
+<p><strong>The linearity assumption could be met because the scatterplot of x and y looks generally straight but shows some tailing at the ends. The independence assumption is not met because the residuals vs. x plot shows a curve. The equal variance/homoscedacity assumption is also not met because the the scale location plot shows a nonlinear trend. The normal population assumption is also not met because the normal qq plot is incredibly heavy tailed. The assumptions not being met shows that the model used is not a good fit for the data, this means that we could use a different model. It could also be that the data itself could be ‘bad data’ in that there is no independence between x and y.</strong></p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Answer the question of interest based on your analysis.</li>
+</ol>
+<p><strong>We cannot assume that more funding in a police department reduces incidents of police brutality because all 4 of the assumptions are not met. Further, correlation does not impact causation and a true experiment would need to be run in order to determine such a relationship.</strong></p>
+</div>
+<div id="problem-3-data-ethics-10-points" class="section level1">
+<h1>Problem 3: Data ethics (10 points)</h1>
+<p>Describe the dataset. Considering our lecture on data ethics, what concerns do you have about the dataset? Once you perform your analysis to answer the question of interest using this dataset, what concerns might you have about the results?</p>
+<p><strong>The dataset provides data about 200 police departments in one year. It reports about the funding received by the department as well as police brutality incidents. This dataset is concerning because it is likely that there was underreporting in terms of the incidents of police brutality since police departments would not want to reveal the true extent of brutality incidents. The results of the regression performed on the dataset is concerning because the only assumption that was barely met was the linearity assumption. This means that the results performed from the tests are not accurate and cannot be used to generate a hypothesis whether there is an impact of funding on brutality incidents. </strong></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
