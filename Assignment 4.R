@@ -1,465 +1,14 @@
----
-title: "Assignments"
-output:
-  html_document:
-    toc: true
-    toc_float: true
-    collapsed: false
-    number_sections: false
-    toc_depth: 1
-    #code_folding: hide
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
-```
-
-This page will contain all the assignments you submit for the class.
-
-
-
-### Instructions for all assignments
-
-I want you to submit your assignment as a PDF, so I can keep a record of what the code looked like that day. I also want you to include your answers on your personal GitHub website. This will be good practice for editing your website and it will help you produce something you can keep after the class is over.
-
-1. Download the Assignment1.Rmd file from Canvas. You can use this as a template for writing your answers. It's the same as what you can see on my website in the Assignments tab. Once we're done with this I'll edit the text on the website to include the solutions.
-
-2. On RStudio, open a new R script in RStudio (File > New File > R Script). This is where you can test out your R code. You'll write your R commands and draw plots here.
-
-3. Once you have finalized your code, copy and paste your results into this template (Assignment 1.Rmd). For example, if you produced a plot as the solution to one of the problems, you can copy and paste the R code in R markdown by using the ` ``{r} ``` ` command. Answer the questions in full sentences and Save.
-
-4. Produce a PDF file with your answers. To do this, knit to PDF (use Knit button at the top of RStudio), locate the PDF file in your docs folder (it's in the same folder as the Rproj), and submit that on on Canvas in Assignment 1.
-
-5. Build Website, go to GitHub desktop, commit and push. Now your solutions should be on your website as well.
-
-
-
-# Assignment 1
-
-**Collaborators: Rachael Villari, Michaela Reiser. **
-
-This assignment is due on Canvas on Monday 9/20 before class, at 10:15 am. Include the name of anyone with whom you collaborated at the top of the assignment.
-
-Collaborators: Rachael Villari, Michaela Reiser 
-
-
-### Problem 1 
-
-Install the datasets package on the console below using `install.packages("datasets")`. Now load the library.
-
-```{r}
-library(datasets)
-```
-
-Load the USArrests data set and rename it `dat`. Note that this dataset comes with R, in the package datasets, so there's no need to load data from your computer. Why is it useful to rename the dataset?
-
-Answer: It is useful to rename the dataset so we have a single, shorter variable to account for the whole dataset
-
-```{r}
-dat <- USArrests
-```
-
-### Problem 2
-
-Use this command to make the state names into a new variable called State. 
-
-```{r, eval=FALSE}
-dat$state <- tolower(rownames(USArrests))
-```
-
-This dataset has the state names as row names, so we just want to make them into a new variable. We also make them all lower case, because that will help us draw a map later - the map function requires the states to be lower case.
-
-
-List the variables contained in the dataset `USArrests`.
-
-Answer: Murder, Assault, Urban Population, Rape
-
-```{r}
-names(dat)
-```
-
-### Problem 3 
-
-What type of variable (from the DVB chapter) is `Murder`? 
-
-Answer: quantitative
-
-What R Type of variable is it?
-
-Answer: numeric
-
-
-### Problem 4
-
-What information is contained in this dataset, in general? What do the numbers mean? 
-
-Answer: The numbers are the frequency of arrests per crime in each state and the urban population is the percentage of people
-in each state who live in an urban area. The information in general is the US Arrests of each crime in each state.
-
-### Problem 5
-
-Draw a histogram of `Murder` with proper labels and title.
-
-```{r}
-hist(dat$Murder, main = "Histogram of US Arrests
-     of Murder", xlab = "US Arrests of Murder", 
-     xlim = c(0,20), ylim = c(0, 15))
-```
-
-### Problem 6
-
-Please summarize `Murder` quantitatively. What are its mean and median? What is the difference between mean and median? What is a quartile, and why do you think R gives you the 1st Qu. and 3rd Qu.?
-
-Answer: 
-Min: 0.8 
-Max:17.4
-Mean:7.788
-Median:7.250
-Q1: 4.075
-Q3: 11.250
-The difference between mean and median is that the mean gives the average of all murders while the median relates to the value at the midpoint of the data set. R gives the 1st and 3rd quartiles so we can have a fuller picture of our dataset and we can have a better idea of where our median falls. 
-
-```{r}
-summary(dat$Murder)
-```
-
-### Problem 7
-
-Repeat the same steps you followed for `Murder`, for the variables `Assault` and `Rape`. Now plot all three histograms together. You can do this by using the command `par(mfrow=c(3,1))` and then plotting each of the three. 
-
-```{r, echo = TRUE, fig.width = 5, fig.height = 8}
-hist(dat$Assault, main = "Histogram of US Arrests of Assault",
-     xlab = "US Arrests of Assault",xlim = c(0,350), 
-     ylim = c(0,15))
-hist(dat$UrbanPop, main = "Histogram of US Urban Population",
-     xlab = "US Urban Population", xlim = c(0,100), 
-     ylim = c(0,15))
-hist(dat$Rape, main = "Histogram of US Arrests of Rape", 
-     xlab = "US Arrests of Rape", xlim = c(0,50), 
-     ylim = c(0,15))
-par(mfrow=c(3,1))
-hist(dat$Assault, main = "Histogram of US Arrests of Assault", 
-     xlab = "US Arrests of Assault", xlim = c(0,350), 
-     ylim = c(0,15))
-hist(dat$UrbanPop, main = "Histogram of US Urban Population",
-     xlab = "US Urban Population", xlim = c(0,100), 
-     ylim = c(0,15))
-hist(dat$Rape, main = "Histogram of US Arrests of Rape", 
-     xlab = "US Arrests of Rape", xlim = c(0,50), 
-     ylim = c(0,15))
-```
-
-What does the command par do, in your own words (you can look this up by asking R `?par`)?
-
-Answer: command par allows one to see all three graphs together in order to compare them more easily
-
-What can you learn from plotting the histograms together?
-
-Answer: You can learn the distributions against each other and see which variable has the most uniform or skewed distribution.
-  
-### Problem 8
-
-In the console below (not in text), type `install.packages("maps")` and press Enter, and then type `install.packages("ggplot2")` and press Enter. This will install the packages so you can load the libraries.
-
-Run this code:
-
-```{r, eval = FALSE, fig.width = 7.5, fig.height = 4}
-install.packages("maps")
-install.packages("ggplot2")
-library('maps') 
-library('ggplot2') 
-
-ggplot(dat, aes(map_id=state, fill=Murder)) + 
-  geom_map(map=map_data("state")) + 
-  expand_limits(x=map_data("state")$long, y=map_data("state")$lat)
-```
-
-What does this code do? Explain what each line is doing.
-
-Answer: The first two lines of code are installing the packages onto R so we can use the functions located within the package. Calling the library of maps and ggplot2 allows us to access these two functions within our own R Script. Lines 167-169 are plotting our USArrests data located in the variable dat, specifically the variable of "Murder." It maps the data by U.S state of the different concentrations of murder arrests.
-
-$$\\[2in]$$
-
-
-
-
-# Assignment 2 
-
-###Problem 1: Load Data 
-
-```{r}
-dat.nsduh <- read.csv("dat.nsduh.small.1.csv")
-```
-
-What are the dimensions of the datset? 
-
-```{r}
-dim(dat.nsduh)
-```
-
-Answer: 171 rows and 7 columns 
-
-###Problem 2: Variables
-
-Describe the variables in the dataset
-
-Answer: Answer: Variable names are "mjage," "cigage,"
-"iralcage," age2," "sexatract," "speakengl," and "irsex." mj, alc, and age are quantitative variables while the others are categorical coded as an integer. mjage = the age that the individual first used marijuana, cigeage = the age that the individual first had a cigarette, iralcage = age to first 
-drink alcohol, age2 = recoded age, sexatract = sexual attraction, speakengl = how well does one speak english, irsex = gender
-
-```{r}
-names(dat.nsduh)
-summary(dat.nsduh)
-```
-
-What is this dataset about? Who collected the data, what kind of sample is it, and what was the purpose of generating the data?
-
-Answer: This is data from the National Survey on Drug Use and Health, about the drug use, alcohol use, cigarette use, and demographics of a random sample taken from all 50 states
-
-the purpose of generating the data is to track levels of substance use and identify the groups that are the main users
-
-###Problem 3: Age and gender
-
-What is the age distribution of the sample like? Make sure you read the codebook to know what the variable values mean.
-
-```{r}
-hist(dat.nsduh$age2)
-summary(dat.nsduh$age2)
-```
-
-Answer: the age distribution has a left skew. The mean is 13.98, median is 15, First quartile is 13 and the third quartile is 15 with a min of 4 and max of 17. This means that the average age of the sample is between 26 and 29 years old, the minimum is around 15 years of age, and the max is around 65+ years 
-
-Do you think this age distribution representative of the US population? Why or why  not?
-
-Answer:No I do not think this age distribution is representative of the U.S population because the distribution is skewed, a true representation would be closer to a uniform distribution
-
-Is the sample balanced in terms of gender? If not, are there more females or males?
-
-```{r}
-hist(dat.nsduh$irsex)
-```
-
-Answer: the sample contains slightly more males than females 
-
-Use this code to draw a stacked bar plot to view the relationship between sex and age. What can you conclude from this plot?
-
-```{r}
-tab.agesex <- table(dat.nsduh$irsex, dat.nsduh$age2)
-barplot(tab.agesex,
-        main = "Stacked barchart",
-        xlab = "Age category", ylab = "Frequency",
-        legend.text = rownames(tab.agesex),
-        beside = FALSE) # Stacked bars (default)
-```
-
-Answer: One can conclude that the majority of individuals lie within the 13-15 age category. The younger age categories are mainly male dominated. This is a left skewed distribution where most of the data is in the higher age categories 
-
-###Problem 4: Substance use
-
-```{r}
-par(mfrow=c(3,1))
-hist(dat.nsduh$cigage, main = "Age of First Cigarette",xlab = "Age")
-hist(dat.nsduh$mjage, main = "Age of First Marijuana Use", xlab = "Age")
-hist(dat.nsduh$iralcage, main = "Age of First Drink", xlab = "Age")
-
-```
-For which of the three substances included in the dataset (marijuana, alcohol, and cigarettes) do individuals tend to use the substance earlier?
-
-Answer: Alcohol is the substance that individuals tend to use earlier
-
-
-###Problem 5: Sexual attraction
-
-What does the distribution of sexual attraction look like? Is this what you expected?
-
-```{r}
-dat.nsduh$sexatract[dat.nsduh$sexatract == 99] <- NA
-hist(dat.nsduh$sexatract, main = "Sexual Attraction", xlab = "Sexual Attraction")
-```
-
-Answer: yes this is what one would expect because the majority of the U.S Population is heterosexual
-
-What is the distribution of sexual attraction by gender? 
-
-```{r}
-par(mar=c(1,1,1,1))
-
-tab.gendersexatract <- table(dat.nsduh$irsex, dat.nsduh$sexatract)
-barplot(tab.gendersexatract,
-        main = "Relationship of Sexual Attraction and Gender",
-        xlab = "Sexual Attraction", ylab = "Frequency",
-        legend.text = rownames(tab.gendersexatract),
-        beside = FALSE) # Stacked bars (default)
-```
-
-Answer: The stacked bar plot shows a right skew where the majority of individuals are purely heterosexual. The majority of men self report as heterosexual while there is marginally more balance in women between hetersexuality and being mostly attracted to the opposite gender (2).
-
-###Problem 6: English speaking
-
-What does the distribution of English speaking look like in the sample? Is this what you might expect for a random sample of the US population?
-
-```{r}
-hist(dat.nsduh$speakengl, main = "English Speaking", xlab = "English Speaking")
-```
-
-Answer: The majority of individuals can speak English very well while the minority report speaking it well or not well. This is representative of the U.S
-
-Are there more English speaker females or males?
-
-```{r}
-tab.genderspeakengl <- table(dat.nsduh$irsex, dat.nsduh$speakengl)
-barplot(tab.genderspeakengl,
-        main = "Relationship of Gender and English Fluency",
-        xlab = "English fluency", ylab = "Frequency",
-        legend.text = rownames(tab.genderspeakengl),
-        beside = FALSE) # Stacked bars (default)
-```
-
-Answer: there are more English speaking males
-
-
-
-# Assignment 3
-
----
-
-**Collaborators: **.
-
-This assignment is due on Canvas on Wednesday 10/27/2021 before class, at 10:15 am. Include the name of anyone with whom you collaborated at the top of the assignment.
-
-Submit your responses as either an HTML file or a PDF file on Canvas. Also, please upload it to your website.
-
-Save the file (found on Canvas) crime_simple.txt to the same folder as this file (your Rmd file for Assignment 3).
-
-Load the data.
-```{r}
-library(readr)
-library(knitr)
-dat.crime <- read_delim("crime_simple.txt", delim = "\t")
-```
-
-
-This is a dataset from a textbook by Brian S. Everitt about crime in the US in 1960. The data originate from the Uniform Crime Report of the FBI and other government sources. The data for 47 states of the USA are given. 
-
-Here is the codebook:
-
-R: Crime rate: # of offenses reported to police per million population
-
-Age: The number of males of age 14-24 per 1000 population
-
-S: Indicator variable for Southern states (0 = No, 1 = Yes)
-
-Ed: Mean of years of schooling x 10 for persons of age 25 or older
-
-Ex0: 1960 per capita expenditure on police by state and local government
-
-Ex1: 1959 per capita expenditure on police by state and local government
-
-LF: Labor force participation rate per 1000 civilian urban males age 14-24
-
-M: The number of males per 1000 females
-
-N: State population size in hundred thousands
-
-NW: The number of non-whites per 1000 population
-
-U1: Unemployment rate of urban males per 1000 of age 14-24
-
-U2: Unemployment rate of urban males per 1000 of age 35-39
-
-W: Median value of transferable goods and assets or family income in tens of $
-
-X: The number of families per 1000 earning below 1/2 the median income
-
-
-We are interested in checking whether the reported crime rate (# of offenses reported to police per million population) and the average education (mean number of years of schooling for persons of age 25 or older) are related. 
-
-
-1. How many observations are there in the dataset? To what does each observation correspond?
-
-```{r}
-names(dat.crime)
-```
-
-
-
-__R corresponds to the crime rate. Age corresponds to the number of males of age 14-24 per 1000 population.S is the ndicator variable for Southern states where 0 = No and 1 = Yes. Ed is the mean of years of schooling x 10 for persons of age 25 or older. Ex0 is the 1960 per capita expenditure on police by state and local government. Ex1 is the 1959 per capita expenditure on police by state and local government. LF is the labor force participation rate per 1000 civilian urban males age 14-24. M is the number of males per 1000 females. N is the state population size in hundred thousands.NW is the number of non-whites per 1000 population.U1 is the unemployment rate of urban males per 1000 of age 14-24. U2 is the unemployment rate of urban males per 1000 of age 35-39. W is the median value of transferable goods and assets or family income in tens of $. Finally, X is the number of families per 1000 earning below 1/2 the median income__
-
-2. Draw a scatterplot of the two variables. Calculate the correlation between the two variables. Can you come up with an explanation for this relationship?
-
-```{r, fig.width=6, fig.height=4}
-plot(dat.crime$Ed, dat.crime$R, main = "Relationship between
-     Education Level and Crime Reporting", ylab = "# of offenses
-     reported per mil", xlab = "Mean of years of schooling x 10
-     for persons of age 25 or older",xlim = c(80, 130), ylim 
-     = c(0, 200))
-
-cor(dat.crime$Ed, dat.crime$R)
-```
-
-__There is a correlation of 0.32 between Education level and Crime reporting. This suggests that there is a positive relationship between the two variables. This could be because as one becomes more educated, one becomes more aware of what is illegal and wants to work toward crime reduction and making their surroudning space safer.__
-
-
-
-3. Regress reported crime rate (y) on average education (x) and call this linear model crime.lm and write the summary of the regression by using this code, which makes it look a little nicer
-
-```{r, eval=TRUE} 
-# Remember to remove eval=FALSE above!
-dat.crime$Ed.c = scale(dat.crime$Ed, center=TRUE, scale=FALSE)
-crime.lm <- lm(formula = R ~ Ed, data = dat.crime)
-summary(crime.lm)
-kable(summary(crime.lm)$coef, digits = 2)
-```
-
-
-
-4. Are the four assumptions of linear regression satisfied? To answer this, draw the relevant plots. (Write a maximum of one sentence per assumption.)
-
-```{r} 
-plot(dat.crime$Ed.c, crime.lm$residuals, ylim=c(-100,100),
-     main="Residuals vs. x", xlab="x, Scaled Crime Reporting
-     Rate", ylab="Residuals")
-
-abline(h = 0, lty="dashed")
-
-plot(crime.lm, which=1)
-
-plot(crime.lm, which=2)
-
-```
-
-__1. The Residuals versus Fitted plot shows no nonlinear trend as proved by the approximately flat red line fitting the linearity assumption. The independence assumption is met as shown by the residuals vs. x plot as there is no pattern of residuals shown. The homoscedasticity assumption is met as shown by the scatterplot in problem 2 as the points are random, but do not have any serious outliers. The normal population assumption is mostly met but could be argued that the right tail of the distribution is smaller than usual for a normal distribution. __
-
-
-5. Is the relationship between reported crime and average education statistically significant? Report the estimated coefficient of the slope, the standard error, and the p-value. What does it mean for the relationship to be statistically significant?
-
-__Yes, the relationship between crime reporting and average education is statistically significant. The coefficient of the slope is 1.12, the standard error is 0.49, and the p-value is 0.03. The relationship being statistically significant is shown through the p-value being less than the alpha value of 0.05. It means that the results are not due to chance rather correlated to the relationship between the two studied variables.__
-
-6. How are reported crime and average education related? In other words, for every unit increase in average education, how does reported crime rate change (per million) per state?
-
-__Reported crime and average education are related in that for every unit increase in education, reported crime rate increases by 1.12 units per million per state.__
-
-7. Can you conclude that if individuals were to receive more education, then crime will be reported more often? Why or why not?
-
-__Yes, this can be concluded do to the statistical significance of education level and crime reporting in being compared to each other through linear regression. Along with the positive correlation of the scatterplot and all of the assumptions being met, there is a relationship between getting an education and being more likely to report crime.__
-
-
 # Assignment 4
 
 #### loading the library of tidyverse where the tidyverse package is stored to access
 #### ggplot
-
 library(tidyverse)
 #### installing the package so one can reload it after every session
-
 install.packages("tidyverse")
-
 #### calling mpg dataframe A data frame is a rectangular collection of variables 
 #### (in the columns) and observations (in the rows). mpg contains observations collected
 #### by the US Environmental Protection Agency on 38 models of car.
-
 mpg
-
 #> # A tibble: 234 x 11
 #>   manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class 
 #>   <chr>        <chr> <dbl> <int> <int> <chr>      <chr> <int> <int> <chr> <chr> 
@@ -473,7 +22,6 @@ mpg
 
 #### mapping a gg scatterplot that maps car's engine size against fuel efficiency
 #### shows a negative relationship between x and y variables 
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy))
 
@@ -482,8 +30,7 @@ ggplot(data = <DATA>) +
   <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
 
 #### mapping aesthetics in your plot to the variables in the dataset, maps class to 
-#### color aesthetic
-
+#3## color aesthetic 
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = class))
 
@@ -494,36 +41,29 @@ ggplot(data = mpg) +
 
 #### mapping class to the alpha aesthetic, which controls the transparency of the points, 
 #### or to the shape aesthetic, which controls the shape of the points
-
-#### Left
-
+# Left
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
 
-#### Right
-
+# Right
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, shape = class))
 
 #### setting aesthetic properties of geom manually, making all of the points blue
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy), color = "blue")
 
 #### missed parentheses so the point do not come out blue
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
 
 #### plus sign must come at the end of the line not the beginning
-
 ggplot(data = mpg) 
 + geom_point(mapping = aes(x = displ, y = hwy))
 
 #### facetting plot by a single variable. First argument is a formula, followed by ~
 #### followed by variable name where formula is the name of a data structure in R/ The variable that 
 #### is passed to facet_wrap should be discrete 
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
   facet_wrap(~ class, nrow = 2)
@@ -532,14 +72,12 @@ ggplot(data = mpg) +
 #### plot call. The first argument of facet_grid() is also a formula. This time the 
 #### formula should contain two variable names separated by a ~. The empty grids 
 #### show that there is no data attributed to this specific variable 
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
   facet_grid(drv ~ cyl)
 
 #### Code creates 4 facet columns that are generated by the "." The data maps 
 #### engine size against fuel efficiency
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) +
   facet_grid(drv ~ .)
@@ -550,25 +88,21 @@ ggplot(data = mpg) +
 
 #### facets columns and rows of each type of car variable, engine size against fuel 
 #### efficiency 
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
   facet_wrap(~ class, nrow = 2)
 
 #### point geom representation of the data
-
-#### left
+# left
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy))
 
 #### right smooth geom representation of the data
-
 ggplot(data = mpg) + 
   geom_smooth(mapping = aes(x = displ, y = hwy))
 
 #### drawing a different line, with a different linetype, for each unique value of
 #### the variable that you map to linetype.
-
 ggplot(data = mpg) + 
   geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv))
 
@@ -578,7 +112,6 @@ ggplot(data = mpg) +
 #### ggplot2 draws a separate object for each unique value of the grouping variable.
 #### In practice, ggplot2 will automatically group the data for these geoms whenever you 
 #### map an aesthetic to a discrete variable (linetype example)
-
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy))
 
@@ -593,13 +126,11 @@ ggplot(data = mpg) +
 
 #### displaying multiple geoms in the same plot by adding multiple geom functions to
 #### ggplot
-
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) +
   geom_smooth(mapping = aes(x = displ, y = hwy))
 
 #### Avoiding duplication of variables by passing a set of mappings to ggplot()
-
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth()
@@ -608,7 +139,6 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 #### mappings for the layer. Uses these mappings to extend or overwrite the 
 #### global mappings for that layer only. This makes it possible to display different 
 #### aesthetics in different layers. 
-
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = class)) + 
   geom_smooth()
@@ -616,19 +146,16 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 #### smooth line displays just a subset of the mpg dataset, the subcompact cars.
 #### local data argument in geom_smooth() overrides the global data argument in 
 #### ggplot() for that layer only.
-
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
 geom_point(mapping = aes(color = class)) + 
   geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
 
 #### Point plot with smooth line mapping separated by color
-
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 
 #### Same graph by avoiding duplication of variables by passing in the mapping function
-
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth()
@@ -639,20 +166,17 @@ ggplot() +
 
 #### generates bar plot of the diamonds dataset showing that  more diamonds are 
 #### available with high quality cuts than with low quality cuts
-
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut))
 
 #### Using geoms and stats interchangeably. You can
 #### recreate the previous plot using stat_count() instead of geom_bar()
-
 ggplot(data = diamonds) + 
   stat_count(mapping = aes(x = cut))
 
 #### Overriding the default stat. change the stat of geom_bar() from count 
 #### (the default) to identity. Lets one map the height of the bars to the raw 
 #### values of a y variable
-
 demo <- tribble(
   ~cut,         ~freq,
   "Fair",       1610,
@@ -775,14 +299,12 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 #<FACET_FUNCTION>
 
 library(tidyverse)
-
 #### this line is loading the package 'tidyverse' which we already have installed
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(color = class)) +
   geom_smooth(se = FALSE) +
   labs(title = "Fuel efficiency generally decreases with engine size")
-  
 #### this section is making a scatterplot with the function geom_point and then 
 #### making a line of best fit using the geom_smooth function
 #### this section also employs the labs function to make the label for the title of the graph
@@ -795,7 +317,6 @@ ggplot(mpg, aes(displ, hwy)) +
     subtitle = "Two seaters (sports cars) are an exception because of their light weight",
     caption = "Data from fueleconomy.gov"
   )
-  
 #### Only difference from last section is that it uses the labs function to also add a subtitle and caption to the graph
 
 ggplot(mpg, aes(displ, hwy)) +
@@ -806,7 +327,6 @@ ggplot(mpg, aes(displ, hwy)) +
     y = "Highway fuel economy (mpg)",
     colour = "Car type"
   )
-  
 #### Difference is that it uses x and y to define the axes labels and makes the legend label "car type"
 
 df <- tibble(
@@ -819,7 +339,6 @@ ggplot(df, aes(x, y)) +
     x = quote(sum(x[i] ^ 2, i == 1, n)),
     y = quote(alpha + beta + frac(delta, theta))
   )
-  
 #### this section is creating a data frame using the tibble function
 #### it also uses mathematical functions in place of strings for the axes using the quote function
 
@@ -830,20 +349,17 @@ best_in_class <- mpg %>%
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(colour = class)) +
   geom_text(aes(label = model), data = best_in_class)
-  
 #### pulls out the highest rated of each class, in this case the most efficient cars
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(colour = class)) +
   geom_label(aes(label = model), data = best_in_class, nudge_y = 2, alpha = 0.5)
-  
 #### this section uses the geom_label function to draw a rectangle behind the text, with nudge_y moving the labels above the corresponding points
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(colour = class)) +
   geom_point(size = 3, shape = 1, data = best_in_class) +
   ggrepel::geom_label_repel(aes(label = model), data = best_in_class)
-  
 #### Using the ggrepel package to automatically adjust labels so they don't overlap
 
 class_avg <- mpg %>%
@@ -863,7 +379,6 @@ ggplot(mpg, aes(displ, hwy, colour = class)) +
   ) +
   geom_point() +
   theme(legend.position = "none")
-  
 #### replacing the legend with labels on the plot
 
 label <- mpg %>%
@@ -876,7 +391,6 @@ label <- mpg %>%
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
   geom_text(aes(label = label), data = label, vjust = "top", hjust = "right")
-  
 #### this section adds a single label to the plot by creating a new data frame
 
 label <- tibble(
@@ -888,7 +402,6 @@ label <- tibble(
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
   geom_text(aes(label = label), data = label, vjust = "top", hjust = "right")
-  
 #this section places the text we just created directly on the borders of the plot
 
 "Increasing engine size is related to decreasing fuel economy." %>%
@@ -896,7 +409,6 @@ ggplot(mpg, aes(displ, hwy)) +
   writeLines()
 "Increasing engine size is related to
 decreasing fuel economy."
-
 #### this section adds line breaks given the number of characters
 
 ggplot(mpg, aes(displ, hwy)) +
@@ -904,20 +416,17 @@ ggplot(mpg, aes(displ, hwy)) +
   scale_x_continuous() +
   scale_y_continuous() +
   scale_colour_discrete()
-  
 #### this section chooses scales that are not the default
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
   scale_y_continuous(breaks = seq(15, 40, by = 5))
-  
 #### this section uses the break function to override the default choice of axes ticks
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
   scale_x_continuous(labels = NULL) +
   scale_y_continuous(labels = NULL)
-  
 #### this section uses labels = NULL to get rid of the numeric tick labels on the axes
 
 presidential %>%
@@ -926,7 +435,6 @@ presidential %>%
   geom_point() +
   geom_segment(aes(xend = end, yend = id)) +
   scale_x_date(NULL, breaks = presidential$start, date_labels = "'%y")
-  
 #### this section uses the breaks function to highlight the observations in the data set
 
 base <- ggplot(mpg, aes(displ, hwy)) +
@@ -936,7 +444,6 @@ base + theme(legend.position = "left")
 base + theme(legend.position = "top")
 base + theme(legend.position = "bottom")
 base + theme(legend.position = "right") # the default
-
 #### controlling where the legend is drawn
 
 ggplot(mpg, aes(displ, hwy)) +
@@ -944,9 +451,7 @@ ggplot(mpg, aes(displ, hwy)) +
   geom_smooth(se = FALSE) +
   theme(legend.position = "bottom") +
   guides(colour = guide_legend(nrow = 1, override.aes = list(size = 4)))
-  
 #`geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
 #### uses nrow to control the number of rows and overrides the aesthetic using override.aes
 
 ggplot(diamonds, aes(carat, price)) +
@@ -954,14 +459,12 @@ ggplot(diamonds, aes(carat, price)) +
 
 ggplot(diamonds, aes(log10(carat), log10(price))) +
   geom_bin2d()
-  
 #### log transforms the data to make it easier to see the precise relationship
 
 ggplot(diamonds, aes(carat, price)) +
   geom_bin2d() + 
   scale_x_log10() + 
   scale_y_log10()
-  
 #### we use this to get rid of the log axes labels and rescale the axes
 
 ggplot(mpg, aes(displ, hwy)) +
@@ -970,13 +473,11 @@ ggplot(mpg, aes(displ, hwy)) +
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(color = drv)) +
   scale_colour_brewer(palette = "Set1")
-  
 #### adjusts the colors of the graph using the palette function
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(color = drv, shape = drv)) +
   scale_colour_brewer(palette = "Set1")
-  
 #### adds a shape mapping using the shape function
 
 presidential %>%
@@ -985,7 +486,6 @@ presidential %>%
   geom_point() +
   geom_segment(aes(xend = end, yend = id)) +
   scale_colour_manual(values = c(Republican = "red", Democratic = "blue"))
-  
 #### this section sets the colors of the data set to match the standard mapping of party with colour = party
 
 df <- tibble(
@@ -1000,7 +500,6 @@ ggplot(df, aes(x, y)) +
   geom_hex() +
   viridis::scale_fill_viridis() +
   coord_fixed()
-  
 #### employs a colour scheme that uses continous colors
 
 ggplot(mpg, mapping = aes(displ, hwy)) +
@@ -1013,7 +512,6 @@ mpg %>%
   ggplot(aes(displ, hwy)) +
   geom_point(aes(color = class)) +
   geom_smooth()
-  
 #### this section uses coord_cartesian to zoom in on a specific region of the plot
 
 suv <- mpg %>% filter(class == "suv")
@@ -1024,7 +522,6 @@ ggplot(suv, aes(displ, hwy, colour = drv)) +
 
 ggplot(compact, aes(displ, hwy, colour = drv)) +
   geom_point()
-  
 #### this section subsets the data
 
 x_scale <- scale_x_continuous(limits = range(mpg$displ))
@@ -1042,29 +539,21 @@ ggplot(compact, aes(displ, hwy, colour = drv)) +
   x_scale +
   y_scale +
   col_scale
-  
 #### shares the scales of the plots across different plots using the limits function
 
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(color = class)) +
   geom_smooth(se = FALSE) +
   theme_bw()
-  
 #### uses theme_bw to change the theme of the blot
 
 ggplot(mpg, aes(displ, hwy)) + geom_point()
-
 #### creates a ggplot as we have been doing
 
 ggsave("my-plot.pdf")
 
 #Saving 7 x 4.33 in image
 #### uses the ggsave function to save our current plot as an image
-
-
-
-
-
 
 
 
