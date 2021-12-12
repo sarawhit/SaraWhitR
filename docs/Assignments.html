@@ -1125,6 +1125,157 @@ abline(h = 0, lty=&quot;dashed&quot;)</code></pre>
 <p>#Saving 7 x 4.33 in image #### uses the ggsave function to save our current plot as an image</p>
 </div>
 </div>
+<div id="crim250-final-project---crime-distributions-at-ivy-league-institutions" class="section level1">
+<h1>Crim250 Final Project - Crime Distributions at Ivy League Institutions</h1>
+<p>Loading Data: Columbia, Yale, UPenn</p>
+<pre class="r"><code>dat.Columbia &lt;- read.csv(&#39;jacobdkaplan.com_school_count_Columbia University in the City of New York.csv&#39;)
+dat.Upenn &lt;- read.csv(&#39;upenndata.csv&#39;)
+dat.Yale &lt;- read.csv(&#39;jacobdkaplan.com_school_count_Yale University.csv&#39;)</code></pre>
+</div>
+<div id="introduction" class="section level1">
+<h1>1. INTRODUCTION</h1>
+<p>At the University level, it is important that crime trends are observed in relation to the external factors that may have an effect. Ivy League universities, being private institutions that receive billions of dollars in endowments, should have ample measures in place to control crime rates on campus to maintain the safety of students. In this report, we will observe the total crime trends between the University of Pennsylvania, Yale University, and Columbia University and then take a more specific look at sexual offense trends. These trends will be compared with external research that analyzes police funding and the implementation of Title IX. Ultimately, it is important that more causal research is conducted in this area to observe whether it is beneficial to have privately funded university police departments and whether to bolster Title IX power. The data used in this report contain the total crime data from 2001-2017 for the three Ivy League institutions mentioned above.</p>
+</div>
+<div id="exploratory-data-analysis" class="section level1">
+<h1>2. EXPLORATORY DATA ANALYSIS</h1>
+<div id="data-description" class="section level4">
+<h4>2.1 Data Description</h4>
+<p>The selected dataset was compiled data from Jacob Kaplan on total crimes reported at Universities.1 All of the data comes from the Department of Education Office of Postsecondary Education, which collects crime data from colleges. The following variables were the focus of the analysis: total number of aggravated assault, total number of arson, total number of motor vehicle theft, total number of non-negligent manslaughter, total number of negligent manslaughter, total number of sex offenses. The variables total number of on campus sex crimes and total number of off campus sex crimes were explored as well. All datasets used for this analysis individually contain 17 years of data with 1039 observations.</p>
+<pre class="r"><code>dim(dat.Columbia)</code></pre>
+<pre><code>## [1]   17 1039</code></pre>
+<pre class="r"><code>dim(dat.Yale)</code></pre>
+<pre><code>## [1]   17 1039</code></pre>
+<pre class="r"><code>dim(dat.Upenn)</code></pre>
+<pre><code>## [1]   17 1039</code></pre>
+</div>
+<div id="missing-values" class="section level4">
+<h4>2.2 MISSING VALUES</h4>
+<p>There are many missing values because, different from the value of 0, there are crime “categories” that do not have any reported crime data for certain years. For example, looking at the University of Pennsylvania data, there is no data for off-campus rape crimes until 2014. This will affect our data analysis, because the crime statistics may seem lower than they actually are.</p>
+</div>
+<div id="university-locations" class="section level4">
+<h4>2.3 UNIVERSITY LOCATIONS</h4>
+<p>The three universities are located in urban settings. University of Pennsylvania is located in Philadelphia, PA (2019 pop. = 1.58 million).2 Columbia University is located in New York City, NY (2019 pop. = 8.33 million).2 Yale University is in New Haven, CT (2019 pop. = 130,250).2 All population data was retrieved from the US census population estimates.</p>
+</div>
+<div id="campus-police-force" class="section level4">
+<h4>2.4 CAMPUS POLICE FORCE</h4>
+<pre><code>The University of Pennsylvania’s Division of Public Safety (DPS) comprises 180 personnel and 121 of these are sworn-in University of Pennsylvania police officers.3 The Yale Police Department (YPD) comprises 93 sworn-in police officers.4 Due to New York regulations, Columbia University has 147 full-time security officers and no sworn-in officers.5  These security officers cannot carry firearms or arrest individuals, but they can detain suspected criminals on the University property. However, Columbia University is in the 26th precinct of the NYPD.6 </code></pre>
+</div>
+<div id="total-crimes-per-year" class="section level4">
+<h4>2.5 TOTAL CRIMES PER YEAR</h4>
+<pre class="r"><code>plot(dat.Columbia$year, dat.Columbia$crimes_total_total, type = &quot;b&quot;, main = &quot;Scatterplot of Total Number of Reported Crimes at Columbia from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of offenses reported to police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Yale$year, dat.Yale$crimes_total_total, type = &quot;b&quot;, main = &quot;Scatterplot of Total Number of Reported Crimes at Yale from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of offenses reported to police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Upenn$year, dat.Upenn$crimes_total_total, type = &quot;b&quot;, main = &quot;Scatterplot of Total Number of Reported Crimes at UPenn from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of offenses reported to police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p>
+</div>
+<div id="average-of-total-sex-offenses-per-year" class="section level4">
+<h4>2.6 AVERAGE OF TOTAL SEX OFFENSES PER YEAR</h4>
+<pre class="r"><code>plot(dat.Columbia$year, dat.Columbia$crimes_total_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of Total Number of Reported Sex Crimes at Columbia from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Yale$year, dat.Yale$crimes_total_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of Total Number of Reported Sex Crimes at Yale from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Upenn$year, dat.Upenn$crimes_total_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of Total Number of Reported Sex Crimes at Upenn from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-28-3.png" width="672" /></p>
+</div>
+<div id="differences-by-onoff-campus" class="section level4">
+<h4>2.7 DIFFERENCES BY ON/OFF CAMPUS</h4>
+</div>
+<div id="on-campus-sex-offenses" class="section level4">
+<h4>2.7.1 ON CAMPUS SEX OFFENSES</h4>
+<pre class="r"><code>plot(dat.Columbia$year, dat.Columbia$crimes_on_campus_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of On Campus Total Number of Reported Sex Crimes at Columbia from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Yale$year, dat.Yale$crimes_on_campus_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of On Campus Total Number of Reported Sex Crimes at Yale from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-29-2.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Upenn$year, dat.Upenn$crimes_on_campus_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of On Campus Total Number of Reported Sex Crimes at UPenn from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-29-3.png" width="672" /></p>
+<p>2.7.2 OFF CAMPUS SEX OFFENSES</p>
+<pre class="r"><code>plot(dat.Columbia$year, dat.Columbia$crimes_noncampus_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of Off Campus Total Number of Reported Sex Crimes at Columbia from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Yale$year, dat.Yale$crimes_noncampus_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of Off Campus Total Number of Reported Sex Crimes at Yale from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+<pre class="r"><code>plot(dat.Upenn$year, dat.Upenn$crimes_noncampus_sex_offenses_total,  type = &quot;b&quot;, main = &quot;Scatterplot of Off Campus Total Number of Reported Sex Crimes at Upenn from 2001-2017&quot;,
+     xlab = &quot;Year&quot;, ylab = &quot;Number of Offenses Reported to Police&quot;, cex.axis = 0.75)
+
+axis(1, at=seq(2001,2017,1), cex.axis=0.75)</code></pre>
+<p><img src="Assignments_files/figure-html/unnamed-chunk-30-3.png" width="672" /></p>
+</div>
+<div id="differences-in-different-crime-types" class="section level4">
+<h4>2.8 DIFFERENCES IN DIFFERENT CRIME TYPES</h4>
+<div class="figure">
+<img src="~/Desktop/testGitHub/SaraWhitR/ColumbiaBarGraph.png" alt="" />
+<p class="caption">Differences In Different Crime Types</p>
+</div>
+<div class="figure">
+<img src="UpennBarGraph.png" alt="" />
+<p class="caption">Differences In Different Crime Types</p>
+</div>
+<p><img src="YaleBarGraph.png" alt="Differences In Different Crime Types" /> # CAUSAL ANALYSIS</p>
+</div>
+<div id="causal-parameter-of-interest" class="section level4">
+<h4>3.1 CAUSAL PARAMETER OF INTEREST</h4>
+<pre><code>The causal parameters of interest are the size and funding of the police forces of the three Ivy League institutions: University of Pennsylvania, Yale University, and Columbia University. Additionally, we note the effect of Title IX guidelines on the sexual offense trends. While Columbia has 147 security officers rather than a private police force, Columbia benefits from the NYPD as they are located in the 26th precinct. Due to the size and power of the NYPD, Columbia’s total crime trend could be more reflective of the crime trends in the surrounding New York area. UPenn has a private police force of 121 sworn officers, which receives 27 million dollars of funding. UPenn’s negative crime trend could be a result of the robust size and funding of the police force, but without causal analysis and true experiments that include randomization, it is unclear whether this external factor has a relevant impact. Finally, on-campus sexual offense trends could be influenced by the causal parameter of Title IX guidelines and their implementation in university proceedings surrounding sexual offense cases. Title IX allows increased protections and assurance of investigation for on-campus students, which could possibly explain the high reporting rates for sexual offenses. Conversely, Title IX guidelines limit protections in off campus offenses noted in our discussion section.7 
+It is important to note that these causal parameters can only be hypothesized as we do not have sufficient data to analyze whether they play an influential role in our EDA of the crime distributions of the three Ivy Leagues explored. </code></pre>
+</div>
+<div id="proposed-causal-dag" class="section level4">
+<h4>3.2 PROPOSED CAUSAL DAG</h4>
+<p>The proposed causal DAG consists of two actions, the outcomes of the actions, and the confounding variables that may impact both the actions and the outcomes. In our case of understanding the crime distribution of the Columbia, Yale, and UPenn, the actions that influence the crime reporting rates are the strength and presence of the campus funded police force and Title IX when regarding the reporting of sex offenses. The expected outcomes of higher funding and strong on campus police force would seemingly decrease total crime rates whereas decreased funding and smaller police force would result in higher crime. Title IX’s on-campus guidelines would result in higher crime reporting of sex offenses due to increased victim protection whereas their off campus guidelines would result in decreased reporting. However, the confounding variables that may impact both these actions and outcomes are reporting bias, in that there may be failure to report by police offices as well as failure to report by victim (sex assault), and the danger of the location of the school.</p>
+<div class="figure">
+<img src="CausalDAG.png" alt="" />
+<p class="caption">Causal DAG</p>
+</div>
+</div>
+</div>
+<div id="discussion" class="section level1">
+<h1>4. DISCUSSION</h1>
+<p>We wanted to determine whether 1) There was a significant difference in total crime rates and sexual offenses between three different urban, Ivy League institutions, and 2) if police size and funding, and Title IX guidelines influenced this relationship. Due to a lack of sufficient data on which we could perform linear regression to explore the correlation between these two actions (police funding and Title IX guidelines), it is unclear whether they have an impact on the total crime trends and sexual offense rates at any of the Ivy Leagues we analyzed. However, overall, we found that the University of Pennsylvania had the highest total number of reported crimes from 2001-2017, with a total of 2069 crimes compared to Yale (1991) and Columbia (1589). It is important to note that Columbia had two years of missing data, which could change how its crime rates actually compare to the other universities. Yale University had the highest number of reported sex offenses (246) compared to Columbia University (196) and University of Pennsylvania (216). We find this especially interesting because UPenn has the highest crime rate, despite having the largest number of on-campus sworn-in officers. Additionally, it is intriguing that Yale University is located in the smallest city (population =130,250) of the three schools analyzed, but still has the highest number of reported sex offenses. Yale University also has the lowest police force funding ($10 million), despite having the largest endowment ($42.3 billion) of the three Ivies.2,8,9 We also found that almost all sex offenses reported to the respective campus police forces occurred on campus, rather than off campus. It is possible that this is because off-campus sex offenses are reported to the city police forces. In terms of Title IX providing explanation for the stark difference between on campus and off campus sexual offense trends, new Title IX guidelines do not require universities to investigate events that occur off campus. Therefore, there could ultimately be higher off campus sexual offense trends due to lack of investigation by universities. Our results have some limitations. The Columbia University data set was missing crime data for 2002 and 2004. The data sets that we used were subject to reporting bias and missing data. Failure to report by police officers and failure to report by victim, which is especially prevalent with sexual assault cases, has an effect on the total number of crimes reported, as well as the total number of sexual offenses reported. In addition, due to limited data, we only used scatter and box plots to compare the crime distribution and analyze the relationship between police force funding, Title IX enactment, and crime distribution. The use of linear regression would allow for strong analysis between these variables.</p>
+</div>
+<div id="appendix" class="section level1">
+<h1>5. Appendix</h1>
+<p><img src="UpennAppendix.png" alt="Appendix 1" /> <img src="ColumbiaAppendix.png" alt="Appendix 2" /></p>
+<div class="figure">
+<img src="YaleAppendix.png" alt="" />
+<p class="caption">Appendix 3</p>
+</div>
+</div>
+<div id="sources" class="section level1">
+<h1>6 Sources</h1>
+<p>Kaplan, J. (n.d.). Crimes On University Campuses. Data | Jacob Kaplan. Retrieved December 7, 2021, from <a href="https://jacobdkaplan.com/data.html" class="uri">https://jacobdkaplan.com/data.html</a>. Bureau, U. S. C. (2021, October 8). American Community survey 5-year data (2009-2019). Census.gov. Retrieved December 7, 2021, from <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html" class="uri">https://www.census.gov/data/developers/data-sets/acs-5year.html</a>. Pennsylvania, U. of. (n.d.). About our division. Division of Public Safety. Retrieved December 7, 2021, from <a href="https://www.publicsafety.upenn.edu/about/" class="uri">https://www.publicsafety.upenn.edu/about/</a>. Yale University. (2020, June). Yale Police Department. It’s Your Yale. Retrieved December 7, 2021, from <a href="https://your.yale.edu/community/public-safety/yale-police-department" class="uri">https://your.yale.edu/community/public-safety/yale-police-department</a>. Heinzerling, K. (2017, October 8). With 120 officers, Penn has the largest private police force in Pennsylvania. The Daily Pennsylvanian. Retrieved December 7, 2021, from <a href="https://www.thedp.com/article/2017/10/with-120-officers-penn-has-the-largest-private-police-force-in-pennsylvania" class="uri">https://www.thedp.com/article/2017/10/with-120-officers-penn-has-the-largest-private-police-force-in-pennsylvania</a>. 26th precinct. 26 Precinct - NYPD. (n.d.). Retrieved December 7, 2021, from <a href="https://www1.nyc.gov/site/nypd/bureaus/patrol/precincts/26th-precinct.page" class="uri">https://www1.nyc.gov/site/nypd/bureaus/patrol/precincts/26th-precinct.page</a>. Feldman, S. (2018, October 8). Yale and Title IX: A Complicated History and an Unclear Future. The Politic. Retrieved December 7, 2021, from <a href="https://thepolitic.org/yale-and-title-ix-a-complicated-history-and-an-unclear-future/" class="uri">https://thepolitic.org/yale-and-title-ix-a-complicated-history-and-an-unclear-future/</a>.<br />
+Why: Black students for disarmament at Yale. bsdy. (n.d.). Retrieved December 7, 2021, from <a href="https://www.defundypd.com/why" class="uri">https://www.defundypd.com/why</a>. Yale Investments Office. (n.d.). Retrieved December 07, 2021, from <a href="https://investments.yale.edu/" class="uri">https://investments.yale.edu/</a></p>
+</div>
 
 
 
